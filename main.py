@@ -1,17 +1,20 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+for i in range(1, 5):
+    print(i)
+
 # Load the files
-data = pd.read_excel('Data for Hackathon.xlsx', engine='openpyxl')
-weather = pd.read_csv('El Paso Daily Weather.csv')
+data = pd.read_excel('./Raw Data/Data for Hackathon.xlsx', engine='openpyxl')
+weather = pd.read_csv('./Raw Data/El Paso Daily Weather.csv')
 
 # Convert to datetime
 weather['date'] = pd.to_datetime(weather['date'])
-data['TimeStamp'] = pd.to_datetime(data['TimeStamp'])
+# data['TimeStamp'] = pd.to_datetime(data['TimeStamp'])
 
 # Filter only the first 50 rows of data
-data = data[(data['Source'] == 'LAKE-1') & (data['Parameter'] == 'NOXTONS') & (data['TimeStamp'].dt.year == 2023)]
-print(data)
+data = data[(data['Source'] == 'LAKE-3') & (data['Parameter'] == 'NOXTONS') & (data['TimeStamp'].dt.year == 2023)]
+print(data.head())
 
 # Correct filtering of weather data (for January-April 2022)
 # weather = weather[(weather['date'].dt.month.isin([1, 2, 3, 4])) & 
@@ -34,7 +37,7 @@ ax1.tick_params(axis='y', labelcolor='blue')
 # Second y-axis (Rain)
 ax2 = ax1.twinx()
 ax2.set_ylabel('Precipitation (Rain)', color='red')
-ax2.plot(weather['date'], weather['tavg'], label="Rain", marker='s', linestyle='--', color='red')
+ax2.plot(weather['date'], weather['prcp'], label="Rain", marker='s', linestyle='--', color='red')
 ax2.tick_params(axis='y', labelcolor='red')
 
 # Titles and Labels
